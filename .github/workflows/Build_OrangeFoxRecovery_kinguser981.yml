@@ -110,12 +110,12 @@ jobs:
         cd ${{ github.event.inputs.DEVICE_PATH }}
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
-    - name: Clone common tree
-      run: |
-        cd ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
-        git clone -b android-12.1 https://github.com/dmXq-twrp-development/android_device_samsung_sm8550-common.git device/samsung/sm8550-common
-        cd ${{ github.event.inputs.DEVICE_PATH }}
-        echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
+#    - name: Clone common tree
+#      run: |
+#        cd ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+#        git clone -b android-12.1 https://github.com/dmXq-twrp-development/android_device_samsung_sm8550-common.git device/samsung/sm8550-common
+#        cd ${{ github.event.inputs.DEVICE_PATH }}
+#        echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
     - name: Check Manifest Branch
       uses: haya14busa/action-cond@v1
