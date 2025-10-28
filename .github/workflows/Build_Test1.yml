@@ -51,7 +51,7 @@ jobs:
     - name: Clone Common Tree
       run: |
         cd ${GITHUB_WORKSPACE}/OrangeFox/fox_12.1
-        git clone https://github.com/cola2261/android_device_samsung_sm8550-common-recovery ./device/samsung/sm8550-common
+        git clone https://github.com/cola2261/android_device_samsung_sm8550-common-recovery -b fox_12.1 ./device/samsung/sm8550-common
         cd device/samsung/sm8550-common
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
