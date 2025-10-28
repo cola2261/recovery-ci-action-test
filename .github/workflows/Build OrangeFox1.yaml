@@ -22,11 +22,39 @@ jobs:
         target: [dm1q, dm2q, dm3q]
 
     steps:
-    # ... (Steps 1-9: Checkout, Clean-up, Build Environment, Set Swap Space,
-    # Set OrangeFox branch, Setup Manifest, Clone Device Tree, Clone Common Tree,
-    # Setup ccache - all remain the same) ...
+    - name: Checkout
+      uses: actions/checkout@v4
 
-    # --- STEPS 1-9 (REMAINING CODE OMITTED FOR BREVITY) ---
+    - name: Clean-up
+      uses: rokibhasansagar/slimhub_actions@main
+
+    - name: Build Environment
+      run: |
+        sudo apt update
+        sudo apt -y upgrade
+        sudo apt -y install ccache
+        git clone https://gitlab.com/OrangeFox/misc/scripts
+        cd scripts
+        sudo bash setup/android_build_env.sh
+
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 24
+
+    - name: Set OrangeFox branch
+      run: |
+        echo "FOX_BRANCH=12.1" >> $GITHUB_ENV
+
+    - name: Setup Manifest
+      run: |
+        mkdir -p ${GITHUB_WORKSPACE}/OrangeFox
+        cd ${GITHUB_WORKSPACE}/OrangeFox
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git clone https://gitlab.com/OrangeFox/sync.git
+        cd sync
+        ./orangefox_sync.sh --branch ${{ env.FOX_BRANCH }} --path ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ env.FOX_BRANCH }}
 
     - name: Clone Device Tree
       run: |
